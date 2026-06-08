@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+
+        // Admin bypass
+        if (user?.Email == "admin@campus.com")
+        {
+            Context.Response.Redirect("/Admin/Dashboard");
+        }
+        else
+        {
+            Context.Response.Redirect("/Student/Dashboard");
+        }
+    }
+}
+
+
+<div class="container mt-5">
+    <div class="row align-items-center justify-content-center min-vh-75">
+        <div class="col-md-8 text-center">
+            <h1 class="display-3 fw-bold text-primary mb-3">Campus Event Management System</h1>
+
+            <p class="lead text-secondary mb-5">
+                Your central hub for exploring upcoming campus workshops, seminars, sports, and social events.
+                Register for your favorite events, manage your schedule, and never miss out on campus life!
+            </p>
+
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/Identity/Account/Login" class="btn btn-primary btn-lg px-5 shadow-sm">Login</a>
+                <a href="/Identity/Account/Register" class="btn btn-outline-dark btn-lg px-5 shadow-sm">Register</a>
+            </div>
+
+            <div class="row mt-5 pt-4 border-top">
+                <div class="col-md-4">
+                    <h5 class="fw-bold">📅 Browse Events</h5>
+                    <p class="text-muted small">See what's happening around campus in real-time.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold">🔒 Secure Accounts</h5>
+                    <p class="text-muted small">Dedicated profiles for students and management.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold">⚡ Quick Registration</h5>
+                    <p class="text-muted small">Book your spot in workshops with just a single click.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

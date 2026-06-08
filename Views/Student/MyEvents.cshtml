@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CampusEventsApp.Models.EventRegistration>
+@{
+    ViewData["Title"] = "My Registered Events";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📌 My Registered Events</h2>
+        <a asp-action="EventList" class="btn btn-success">➕ Browse More Events</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Date & Time</th>
+                        <th>Venue</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                You haven't registered for any events yet.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle fw-bold">
+                                    @item.Event.Title
+                                </td>
+
+                                <td class="align-middle">
+                                    @item.Event.EventDate.ToShortDateString() 
+                                    at @item.Event.EventTime.ToString(@"hh\:mm")
+                                </td>
+
+                                <td class="align-middle">
+                                    @item.Event.Venue
+                                </td>
+
+                                <td class="align-middle text-center">
+                                    <span class="badge bg-primary">
+                                        @item.Status
+                                    </span>
+                                </td>
+
+                                <td class="align-middle text-center">
+                                    <form asp-action="CancelRegistration" method="post">
+                                        <input type="hidden" name="eventId" value="@item.Event.Id" />
+
+                                        @if (item.Event.IsOpen)
+                                        {
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                Cancel Registration
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-secondary btn-sm" disabled>
+                                                Closed
+                                            </button>
+                                        }
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

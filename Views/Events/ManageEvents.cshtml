@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CampusEventsApp.Models.Event>
+
+@{
+    ViewData["Title"] = "Manage Events";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📅 Manage Campus Events</h2>
+        <a asp-action="AddEvent" class="btn btn-primary">➕ Create New Event</a>
+    </div>
+
+    <table class="table table-striped table-bordered shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Capacity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr><td colspan="6" class="text-center">No events found. Create one!</td></tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.Title</td>
+                        <td><span class="badge bg-info text-dark">@item.Category</span></td>
+                        <td>@item.EventDate.ToShortDateString() at @item.EventTime.ToString(@"hh\:mm")</td>
+                        <td>@item.Venue</td>
+                        <td>@item.TotalCapacity</td>
+                        <td>
+                            <form action="/Events/DeleteEvent/@item.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-danger">🗑️ Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

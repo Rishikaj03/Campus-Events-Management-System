@@ -1,0 +1,51 @@
+﻿@model CampusEventsApp.Models.Event
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<div class="container mt-4">
+    <h2>✏️ Edit Event</h2>
+
+    <form asp-action="EditEvent" method="post">
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            <input asp-for="Category" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Date</label>
+            <input asp-for="EventDate" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Time</label>
+            <input asp-for="EventTime" type="time" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Venue</label>
+            <input asp-for="Venue" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Capacity</label>
+            <input asp-for="TotalCapacity" type="number" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Description</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update</button>
+        <a asp-action="ManageEvents" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<CampusEventsApp.Models.Event>
+
+@{
+    ViewData["Title"] = "Browse Events";
+}
+
+<div class="container mt-4">
+    <div class="p-4 mb-4 bg-light rounded-3 border">
+        <h2 class="text-primary fw-bold">🎓 Browse Campus Events</h2>
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-info text-center">
+                @TempData["Message"]
+            </div>
+        }
+        <p class="fs-5 text-muted">
+            Discover and register for upcoming workshops, seminars, and social gatherings.
+        </p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="col-12">
+                <div class="alert alert-info shadow-sm">
+                    No upcoming events available right now. Please check back later.
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+
+                            <span class="badge bg-primary mb-2">@item.Category</span>
+
+                            <h5 class="card-title fw-bold">@item.Title</h5>
+
+                            <p class="text-muted small mb-2">
+                                📍 @item.Venue
+                            </p>
+
+                            <p class="card-text text-muted mb-2">
+                                🕒 <strong>Date:</strong> @item.EventDate.ToShortDateString() <br />
+                                ⏰ <strong>Time:</strong> @item.EventTime.ToString(@"hh\:mm")
+                            </p>
+
+                            <!-- 🔥 Seats Left -->
+                            <p class="text-muted mb-2">
+                                Seats Left:
+                                <strong class="text-primary">@item.CapacityLeft</strong>
+                            </p>
+
+                            <hr />
+
+                            <p class="card-text text-truncate">@item.Description</p>
+                        </div>
+
+                        <div class="card-footer bg-white border-0 pb-3">
+
+                            @if (!User.IsInRole("Admin"))
+                            {
+                                <form asp-controller="Student"
+                                      asp-action="Register"
+                                      asp-route-eventId="@item.Id"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    @if (item.CapacityLeft <= 0)
+                                    {
+                                        <button type="button" class="btn btn-danger w-100 fw-bold" disabled>
+                                            Seats Full
+                                        </button>
+                                    }
+                                    else if (!item.IsOpen)
+                                    {
+                                        <button type="button" class="btn btn-secondary w-100 fw-bold" disabled>
+                                            Registration Closed
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-success w-100 fw-bold">
+                                            Register Now
+                                        </button>
+                                    }
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="text-center text-muted fw-bold">
+                                    Admin cannot register
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

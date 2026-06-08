@@ -1,0 +1,82 @@
+﻿@model IEnumerable<CampusEventsApp.Models.Event>
+
+@{
+    ViewData["Title"] = "Campus Events";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">📅 Upcoming Campus Events</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="col-12">
+                <div class="alert alert-info border-0 shadow-sm">
+                    There are no events currently scheduled. Check back later!
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">@item.Category</span>
+
+                            <h5 class="card-title fw-bold">@item.Title</h5>
+
+                            <p class="card-text text-muted mb-2">
+                                📍 <strong>Venue:</strong> @item.Venue
+                            </p>
+
+                            <p class="card-text text-muted mb-3">
+                                🕒 <strong>Date:</strong> @item.EventDate.ToShortDateString()
+                                at @item.EventTime.ToString(@"hh\:mm")
+                            </p>
+
+                            <p class="card-text border-top pt-2">
+                                @item.Description
+                            </p>
+                        </div>
+
+                        <div class="card-footer bg-white border-0 pb-3 text-center">
+
+                            @* STATUS LOGIC *@
+                            @if (!item.IsOpen)
+                            {
+                                <span class="badge bg-secondary px-3 py-2 fs-6">
+                                    Registration Closed
+                                </span>
+                            }
+                            else if (item.CapacityLeft <= 0)
+                            {
+                                <span class="badge bg-danger px-3 py-2 fs-6">
+                                    Seats Full
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success px-3 py-2 fs-6">
+                                    Registration Open
+                                </span>
+                            }
+
+                            <a asp-controller="Student"
+                               asp-action="EventDetails"
+                               asp-route-id="@item.Id"
+                               class="btn btn-outline-primary w-100 mt-2">
+                                View Details
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+

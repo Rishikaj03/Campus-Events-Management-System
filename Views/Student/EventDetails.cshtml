@@ -1,0 +1,85 @@
+﻿@model CampusEventsApp.Models.Event
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="container mt-4">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info text-center">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow">
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-info text-dark px-3 py-2 fs-6">
+                            @Model.Category
+                        </span>
+
+                        @if (Model.IsOpen)
+                        {
+                            <span class="badge bg-success">Open</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Closed</span>
+                        }
+                    </div>
+
+                    <h1 class="fw-bold mb-3">@Model.Title</h1>
+
+                    <p class="lead text-secondary">
+                        @Model.Description
+                    </p>
+
+                    <hr class="my-4" />
+
+                    <div class="row text-center bg-light p-3 rounded-3 mb-4 g-2">
+
+                        <div class="col-sm-4">
+                            <h6 class="text-muted mb-1">📅 DATE</h6>
+                            <strong>@Model.EventDate.ToShortDateString()</strong>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <h6 class="text-muted mb-1">🕒 TIME</h6>
+                            <strong>@Model.EventTime.ToString(@"hh\:mm")</strong>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <h6 class="text-muted mb-1">📍 VENUE</h6>
+                            <strong>@Model.Venue</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="text-center">
+                        <span class="text-muted">Capacity Left:</span>
+                        <span class="fw-bold fs-5 text-primary">
+                            @Model.CapacityLeft
+                        </span>
+                        /
+                        <span class="fw-bold">
+                            @Model.TotalCapacity
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-3 text-center">
+                <a asp-action="EventList"
+                   class="btn btn-link text-decoration-none text-muted">
+                    ⬅️ Back to Events
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

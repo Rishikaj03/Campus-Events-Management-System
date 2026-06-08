@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Success";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card shadow-sm p-5 border-0">
+                <div class="card-body">
+                    <div class="display-1 text-success mb-3">🎉</div>
+                    <h2 class="fw-bold text-success mb-2">Successfully Registered!</h2>
+                    <p class="text-muted mb-4">You have secured your spot for this event. We look forward to seeing you there!</p>
+
+                    <div class="d-grid gap-2">
+                        <a asp-action="MyEvents" class="btn btn-primary btn-lg">📌 View My Events</a>
+                        <a asp-action="EventList" class="btn btn-outline-secondary">Back to All Events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

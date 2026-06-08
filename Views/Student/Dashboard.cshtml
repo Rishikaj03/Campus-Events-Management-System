@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+}
+<div class="welcome-card mb-4">
+<div class="container mt-4">
+    <div class="p-5 mb-4 bg-light rounded-3 border">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Welcome Back!</h1>
+            <p class="fs-4">Explore upcoming campus events and keep track of your registrations.</p>
+        </div>
+    </div>
+
+    <div class="row g-4 text-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-info">
+                <div class="card-body py-4">
+                    <h2 class="display-4 fw-bold text-info">@ViewBag.TotalEvents</h2>
+                    <p class="text-muted mb-0">Available Events</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm border-warning">
+                <div class="card-body py-4">
+                    <h2 class="display-4 fw-bold text-warning">@ViewBag.MyRegistrations</h2>
+                    <p class="text-muted mb-0">Events I'm Attending</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2 justify-content-center">
+        <a asp-action="EventList" class="btn btn-success btn-lg">📅 Browse Events</a>
+        <a asp-action="MyEvents" class="btn btn-outline-dark btn-lg">📌 My Registrations</a>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        &copy; 2026 - CampusEventsApp -
+        <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-white text-decoration-none">
+            Privacy
+        </a>
+    </div>
+</footer>

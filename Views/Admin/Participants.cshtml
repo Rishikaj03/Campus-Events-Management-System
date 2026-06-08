@@ -1,0 +1,73 @@
+﻿@model CampusEventsApp.Models.Event
+@{
+    ViewData["Title"] = "Event Participants";
+}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <a asp-controller="Admin" asp-action="ManageEvents"
+           class="text-decoration-none text-muted">
+            ⬅️ Back to Manage Events
+        </a>
+
+        <h2 class="mt-2">
+            👥 Participants for:
+            <span class="text-primary">@Model?.Title</span>
+        </h2>
+
+        <p class="text-secondary">
+            Total Registrations:
+            <strong>@(Model?.Registrations?.Count ?? 0)</strong>
+            /
+            @(Model?.TotalCapacity ?? 0)
+        </p>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Registration Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model?.Registrations == null || !Model.Registrations.Any())
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center py-4 text-muted">
+                                No students have registered for this event yet.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var reg in Model.Registrations)
+                        {
+                            <tr>
+                                <td class="align-middle fw-bold">
+                                    @reg.Student?.UserName
+                                </td>
+
+                                <td class="align-middle">
+                                    @reg.Student?.Email
+                                </td>
+
+                                <td class="align-middle">
+                                    @reg.RegistrationDate.ToString("g")
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
